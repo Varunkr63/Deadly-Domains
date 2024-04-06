@@ -13,9 +13,9 @@ const Home = () => {
             <a
               className="flex-none text-xl font-semibold dark:text-white dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
               href="#"
-              aria-label="Brand"
+              aria-label="Deadly Domain"
             >
-              Brand
+            Deadly Domains
             </a>
           </div>
           <div className="w-full flex items-center justify-end ms-auto sm:justify-between sm:gap-x-3 sm:order-3">
@@ -124,7 +124,7 @@ const Home = () => {
                 >
                   <img
                     className="inline-block size-[38px] rounded-full ring-2 ring-white dark:ring-gray-800"
-                    src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=320&h=320&q=80"
+                    src="https://cdn.dribbble.com/userupload/4827050/file/original-3be5889b589a4292d863c3e314e366d0.jpg?resize=400x0"
                     alt="Image Description"
                   />
                 </button>
@@ -308,7 +308,7 @@ const Home = () => {
                   href="../figma.html"
                 >
                   <p className="me-2 inline-block text-white text-sm">
-                    Preline UI Figma is live.
+                    Find Domain for your business
                   </p>
                   <span className="group-hover:bg-white/[.1] py-1.5 px-2.5 inline-flex justify-center items-center gap-x-2 rounded-full bg-white/[.075] font-semibold text-white text-sm">
                     <svg
@@ -332,14 +332,13 @@ const Home = () => {
               {/* Title */}
               <div className="max-w-3xl text-center mx-auto">
                 <h1 className="block font-medium text-gray-200 text-4xl sm:text-5xl md:text-6xl lg:text-7xl">
-                  Now it's easier than ever to build products
+                  Deadly Domains
                 </h1>
               </div>
               {/* End Title */}
               <div className="max-w-3xl text-center mx-auto">
                 <p className="text-lg text-gray-400">
-                  Preline is a large open-source project, crafted with Tailwind CSS
-                  framework by Hmlstream.
+                Find the perfect domain name for your business and compare top hosting plans, all in one place. No more struggles, just smooth sailing to online success.
                 </p>
               </div>
               {/* Buttons */}
