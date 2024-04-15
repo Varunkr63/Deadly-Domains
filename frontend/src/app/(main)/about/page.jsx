@@ -1,9 +1,10 @@
 import React from 'react'
+import Link from "next/link"
 
 const About = () => {
   return (
     <div>
-      <section className="bg-white dark:bg-gray-900">
+      <section className="bg-white dark:bg-gray-900 mt-20">
   <div className="relative flex">
     <div className="min-h-screen lg:w-1/3" />
     <div className="hidden w-3/4 min-h-screen bg-gray-100 dark:bg-gray-800 lg:block" />
@@ -34,6 +35,9 @@ const About = () => {
           <p className="text-gray-600 dark:text-gray-300">
             Marketing Manager at Stech
           </p>
+          <div className='mt-5'>
+          <Link href={"/feedback"} type="button" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Feedback</Link>
+          </div>
         </div>
       </div>
       <div className="flex items-center justify-between mt-12 lg:justify-start">

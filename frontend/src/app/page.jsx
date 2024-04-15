@@ -1,10 +1,11 @@
 import React from 'react'
-import Navbar from './(main)/navbar'
+import Link from "next/link"
+
 
 const Home = () => {
   return (
     <>
-      <header className="flex flex-wrap sm:justify-start sm:flex-nowrap z-50 w-full bg-white border-b text-sm py-2.5 sm:py-4 dark:bg-slate-900 dark:border-gray-700">
+      {/* <header className="flex flex-wrap sm:justify-start sm:flex-nowrap z-50 w-full bg-white border-b text-sm py-2.5 sm:py-4 dark:bg-slate-900 dark:border-gray-700">
         <nav
           className="max-w-7xl flex basis-full items-center w-full mx-auto px-4 sm:px-6 lg:px-8"
           aria-label="Global"
@@ -235,65 +236,8 @@ const Home = () => {
             </div>
           </div>
         </nav>
-      </header>
-      <nav
-        className="sticky -top-px bg-white text-sm font-medium text-black ring-1 ring-gray-900 ring-opacity-5 border-t shadow-sm shadow-gray-100 pt-6 md:pb-6 -mt-px dark:bg-slate-900 dark:border-gray-800 dark:shadow-slate-700/[.7]"
-        aria-label="Jump links"
-      >
-        <div className="max-w-7xl snap-x w-full flex items-center overflow-x-auto px-4 sm:px-6 lg:px-8 pb-4 md:pb-0 mx-auto [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-track]:bg-slate-700 dark:[&::-webkit-scrollbar-thumb]:bg-slate-500 dark:bg-slate-900">
-          <div className="snap-center shrink-0 pe-5 sm:pe-8 sm:last-pe-0">
-            <a
-              className="inline-flex items-center gap-x-2 hover:text-gray-500 dark:text-gray-400 dark:hover:text-gray-500 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
-              href="#"
-            >
-              Dashboard
-            </a>
-          </div>
-          <div className="snap-center shrink-0 pe-5 sm:pe-8 sm:last:pe-0">
-            <a
-              className="inline-flex items-center gap-x-2 hover:text-gray-500 dark:text-gray-400 dark:hover:text-gray-500 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
-              href="#"
-            >
-              Users
-            </a>
-          </div>
-          <div className="snap-center shrink-0 pe-5 sm:pe-8 sm:last:pe-0">
-            <a
-              className="inline-flex items-center gap-x-2 hover:text-gray-500 dark:text-gray-400 dark:hover:text-gray-500 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
-              href="#"
-            >
-              Account
-            </a>
-          </div>
-          <div className="snap-center shrink-0 pe-5 sm:pe-8 sm:last:pe-0">
-            <a
-              className="inline-flex items-center gap-x-2 hover:text-gray-500 dark:text-gray-400 dark:hover:text-gray-500 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
-              href="#"
-            >
-              Projects
-            </a>
-          </div>
-          <div className="snap-center shrink-0 pe-5 sm:pe-8 sm:last:pe-0">
-            <a
-              className="inline-flex items-center gap-x-2 hover:text-gray-500 dark:text-gray-400 dark:hover:text-gray-500 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
-              href="#"
-            >
-              Calendar
-            </a>
-          </div>
-          <div className="snap-center shrink-0 pe-5 sm:pe-8 sm:last:pe-0">
-            <a
-              className="inline-flex items-center gap-x-2 hover:text-gray-500 dark:text-gray-400 dark:hover:text-gray-500 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
-              href="#"
-            >
-              
-              <span className="inline bg-gray-100 text-xs text-gray-500 font-semibold rounded-full py-1 px-2 dark:bg-gray-700 dark:text-gray-400">
-                v12.7
-              </span>
-            </a>
-          </div>
-        </div>
-      </nav>
+      </header> */}
+     
 
 
       <>
@@ -338,16 +282,16 @@ const Home = () => {
               {/* End Title */}
               <div className="max-w-3xl text-center mx-auto">
                 <p className="text-lg text-gray-400">
-                Find the perfect domain name for your business and compare top hosting plans, all in one place. No more struggles, just smooth sailing to online success.
+                  Find the perfect domain name for your business and compare top hosting plans, all in one place. No more struggles, just smooth sailing to online success.
                 </p>
               </div>
               {/* Buttons */}
               <div className="text-center">
-                <a
+                <Link
                   className="inline-flex justify-center items-center gap-x-3 text-center bg-gradient-to-tl from-blue-600 to-violet-600 shadow-lg shadow-transparent hover:shadow-blue-700/50 border border-transparent text-white text-sm font-medium rounded-full focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white py-3 px-6 dark:focus:ring-offset-gray-800"
-                  href="#"
+                  href={"/signup"}
                 >
-                  Get started
+                  Signup
                   <svg
                     className="flex-shrink-0 size-4"
                     xmlns="http://www.w3.org/2000/svg"
@@ -362,7 +306,7 @@ const Home = () => {
                   >
                     <path d="m9 18 6-6-6-6" />
                   </svg>
-                </a>
+                </Link>
               </div>
               {/* End Buttons */}
             </div>

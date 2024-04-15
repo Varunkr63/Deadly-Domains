@@ -1,9 +1,53 @@
+'use client';
+import { useFormik } from 'formik';
+import { useRouter } from 'next/navigation';
+import { enqueueSnackbar } from 'notistack';
 import React from 'react';
 
 const Login = () => {
+
+  const router = useRouter();
+
+  const loginForm = useFormik({
+    initialValues: {
+        
+        email: '',
+        password: ''
+       
+       
+    },
+    onSubmit: (values) => {
+        console.log(values);
+
+
+        //sending request to backend
+         fetch('http://localhost:5000/user/authenticate',{
+            method: 'POST',
+            body: JSON.stringify(values),//convert js to json
+            headers:{
+                'content-type': 'application/json'
+            }
+         })
+         .then((response) => {
+            console.log(response.status);
+            if (response.status === 200){
+              enqueueSnackbar("User login Successfully", {variant:"success"})
+              router.push("/")
+            }else{
+              enqueueSnackbar("Something went worng", {variant:"warning"})
+            }
+         }).catch((err) => {
+            console.log(err);
+            enqueueSnackbar("Something went worng", {variant:"warning"})
+         })
+        
+         
+        },
+       
+})
   return (
     <div>
-      <main className="w-full max-w-md mx-auto p-6">
+      <main className="w-full max-w-md mx-auto p-6 mt-20">
   <div className="mt-7 bg-white border border-gray-200 rounded-xl shadow-sm dark:bg-gray-800 dark:border-gray-700">
     <div className="p-4 sm:p-7">
       <div className="text-center">
@@ -55,7 +99,7 @@ const Login = () => {
           Or
         </div>
         {/* Form */}
-        <form>
+        <form onSubmit={loginForm.handleSubmit}>
           <div className="grid gap-y-4">
             {/* Form Group */}
             <div>
@@ -69,6 +113,8 @@ const Login = () => {
                 <input
                   type="email"
                   id="email"
+                  value={loginForm.values.email}
+                  onChange={loginForm.handleChange}
                   name="email"
                   className="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
                   required=""
@@ -112,6 +158,8 @@ const Login = () => {
                 <input
                   type="password"
                   id="password"
+                  value={loginForm.values.password}
+                  onChange={loginForm.handleChange}
                   name="password"
                   className="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
                   required=""
@@ -139,7 +187,7 @@ const Login = () => {
             </div>
             {/* End Form Group */}
             {/* Checkbox */}
-            <div className="flex items-center">
+            {/* <div className="flex items-center">
               <div className="flex">
                 <input
                   id="remember-me"
@@ -156,7 +204,7 @@ const Login = () => {
                   Remember me
                 </label>
               </div>
-            </div>
+            </div> */}
             {/* End Checkbox */}
             <button
               type="submit"

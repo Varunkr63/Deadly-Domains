@@ -1,14 +1,34 @@
 'use client';
 import { useFormik } from 'formik';
+import { useRouter } from 'next/navigation';
 import { enqueueSnackbar } from 'notistack';
 import React from 'react'
+import * as Yup from 'yup'
+
+const signupValidation = Yup.object().shape({
+  name: Yup.string()
+  .min(4,"to short")
+  .max(15, "to long")
+  .required("required"),
+
+  email: Yup.string()
+  .email("invalid").required("required"),
+
+  password: Yup.string().required("enter your password")
+  .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/, "enter valid password"),
+
+  cpassword: Yup.string()
+  .oneOf([Yup.ref("password"), null], "password must match")
+});
 
 const Signup = () => {
+
+  const router = useRouter();
 
   const signupForm = useFormik({
     initialValues: {
         name: '',
-        eamil: '',
+        email: '',
         password: '',
         cpassword: ''
        
@@ -29,6 +49,7 @@ const Signup = () => {
             console.log(response.status);
             if (response.status === 200){
               enqueueSnackbar("User added Successfully", {variant:"success"})
+              router.push("/login")
             }else{
               enqueueSnackbar("Something went worng", {variant:"warning"})
             }
@@ -38,11 +59,12 @@ const Signup = () => {
          })
         
          
-        }
+        },
+        validationSchema: signupValidation
 })
   return (
     <div>
-      <main className="w-full max-w-md mx-auto p-6">
+      <main className="w-full max-w-md mx-auto p-6 mt-10">
   <div className="mt-7 bg-white border border-gray-200 rounded-xl shadow-sm dark:bg-gray-800 dark:border-gray-700">
     <div className="p-4 sm:p-7">
       <div className="text-center">
@@ -115,6 +137,10 @@ const Signup = () => {
                   required=""
                   aria-describedby="email-error"
                 />
+                {
+                  signupForm.touched.name &&
+                  <span className="text-red">{signupForm.errors.name}</span>
+                }
                 <div className="hidden absolute inset-y-0 end-0 pointer-events-none pe-3">
                   <svg
                     className="size-5 text-red-500"
@@ -150,6 +176,10 @@ const Signup = () => {
                   required=""
                   aria-describedby="email-error"
                 />
+                  {
+                  signupForm.touched.email &&
+                  <span className="text-red">{signupForm.errors.email}</span>
+                }
                 <div className="hidden absolute inset-y-0 end-0 pointer-events-none pe-3">
                   <svg
                     className="size-5 text-red-500"
@@ -187,6 +217,10 @@ const Signup = () => {
                   required=""
                   aria-describedby="password-error"
                 />
+                  {
+                  signupForm.touched.password &&
+                  <span className="text-red">{signupForm.errors.password}</span>
+                }
                 <div className="hidden absolute inset-y-0 end-0 pointer-events-none pe-3">
                   <svg
                     className="size-5 text-red-500"
@@ -227,6 +261,10 @@ const Signup = () => {
                   required=""
                   aria-describedby="confirm-password-error"
                 />
+                  {
+                  signupForm.touched.cpassword &&
+                  <span className="text-red">{signupForm.errors.cpassword}</span>
+                }
                 <div className="hidden absolute inset-y-0 end-0 pointer-events-none pe-3">
                   <svg
                     className="size-5 text-red-500"
@@ -249,7 +287,7 @@ const Signup = () => {
             </div>
             {/* End Form Group */}
             {/* Checkbox */}
-            <div className="flex items-center">
+            {/* <div className="flex items-center">
               <div className="flex">
                 <input
                   id="remember-me"
@@ -272,7 +310,7 @@ const Signup = () => {
                   </a>
                 </label>
               </div>
-            </div>
+            </div> */}
             {/* End Checkbox */}
             <button
               type="submit"

@@ -1,11 +1,53 @@
+import { useFormik } from 'formik';
+import { enqueueSnackbar } from 'notistack';
 import React from 'react'
 
 const Contact = () => {
+
+  const contactForm = useFormik({
+    initialValues: {
+        firstname: '',
+        lastname: '',
+        email: '',
+        number: '',
+        details:''
+        
+       
+    },
+    onSubmit: (values) => {
+        console.log(values);
+
+
+        //sending request to backend
+         fetch('http://localhost:5000/contact/add',{
+            method: 'POST',
+            body: JSON.stringify(values),//convert js to json
+            headers:{
+                'content-type': 'application/json'
+            }
+         })
+         .then((response) => {
+            console.log(response.status);
+            if (response.status === 200){
+              enqueueSnackbar("contact added Successfully", {variant:"success"})
+             
+            }else{
+              enqueueSnackbar("Something went worng", {variant:"warning"})
+            }
+         }).catch((err) => {
+            console.log(err);
+            enqueueSnackbar("Something went worng", {variant:"warning"})
+         })
+        
+         
+        },
+        
+})
   return (
     <div>
       <>
   {/* Contact Us */}
-  <div className="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
+  <div className="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto mt-10">
     <div className="max-w-2xl lg:max-w-5xl mx-auto">
       <div className="text-center">
         <h1 className="text-3xl font-bold text-gray-800 sm:text-4xl dark:text-white">
@@ -21,7 +63,7 @@ const Contact = () => {
           <h2 className="mb-8 text-xl font-semibold text-gray-800 dark:text-gray-200">
             Fill in the form
           </h2>
-          <form>
+          <form onSubmit={contactForm.handleSubmit}>
             <div className="grid gap-4">
               {/* Grid */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -32,7 +74,9 @@ const Contact = () => {
                   <input
                     type="text"
                     name="hs-firstname-contacts-1"
-                    id="hs-firstname-contacts-1"
+                    id="firstname"
+                    value={contactForm.values.firstname}
+                    onChange={contactForm.handleChange}
                     className="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
                     placeholder="First Name"
                   />
