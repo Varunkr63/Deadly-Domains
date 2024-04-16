@@ -1,7 +1,14 @@
+'use client';
+import { useFormik } from 'formik'
 import React from 'react'
 import Link from "next/link"
 
+
+
 const About = () => {
+
+
+
   return (
     <div>
       <section className="bg-white dark:bg-gray-900 mt-20">

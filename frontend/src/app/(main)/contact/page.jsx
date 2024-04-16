@@ -1,3 +1,4 @@
+'use client';
 import { useFormik } from 'formik';
 import { enqueueSnackbar } from 'notistack';
 import React from 'react'
@@ -10,7 +11,7 @@ const Contact = () => {
         lastname: '',
         email: '',
         number: '',
-        details:''
+        details:'',
         
        
     },

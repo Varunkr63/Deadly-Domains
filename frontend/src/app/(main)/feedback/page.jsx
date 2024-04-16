@@ -1,8 +1,49 @@
+'use client';
+import { useFormik } from 'formik'
 import React from 'react'
 import Navbar from '../navbar'
+import { enqueueSnackbar } from 'notistack';
 
 
 const Feedback = () => {
+
+  const feedbackForm = useFormik({
+    initialValues: {
+        fullname: '',
+        email: '',
+        comment:'',
+        
+       
+    },
+    onSubmit: (values) => {
+        console.log(values);
+
+         //sending request to backend
+         fetch('http://localhost:5000/contact/add',{
+            method: 'POST',
+            body: JSON.stringify(values),//convert js to json
+            headers:{
+                'content-type': 'application/json'
+            }
+         })
+         .then((response) => {
+            console.log(response.status);
+            if (response.status === 200){
+              enqueueSnackbar("contact added Successfully", {variant:"success"})
+             
+            }else{
+              enqueueSnackbar("Something went worng", {variant:"warning"})
+            }
+         }).catch((err) => {
+            console.log(err);
+            enqueueSnackbar("Something went worng", {variant:"warning"})
+         })
+        
+         
+        },
+        
+})
+
   return (
     <div>
         <>
@@ -26,7 +67,9 @@ const Feedback = () => {
             </label>
             <input
               type="text"
-              id="hs-feedback-post-comment-name-1"
+              id="fullname"
+              value={feedbackForm.values.fullname}
+              onChange={feedbackForm.handleChange}
               className="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
               placeholder="Full name"
             />
@@ -85,6 +128,5 @@ const Feedback = () => {
     
   )
 }
-
 
 export default Feedback
