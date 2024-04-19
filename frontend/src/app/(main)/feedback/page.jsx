@@ -1,7 +1,7 @@
 'use client';
 import { useFormik } from 'formik'
 import React from 'react'
-import Navbar from '../navbar'
+
 import { enqueueSnackbar } from 'notistack';
 
 
@@ -19,7 +19,7 @@ const Feedback = () => {
         console.log(values);
 
          //sending request to backend
-         fetch('http://localhost:5000/contact/add',{
+         fetch('http://localhost:5000/feedback/add',{
             method: 'POST',
             body: JSON.stringify(values),//convert js to json
             headers:{
@@ -29,7 +29,7 @@ const Feedback = () => {
          .then((response) => {
             console.log(response.status);
             if (response.status === 200){
-              enqueueSnackbar("contact added Successfully", {variant:"success"})
+              enqueueSnackbar("feedback added Successfully", {variant:"success"})
              
             }else{
               enqueueSnackbar("Something went worng", {variant:"warning"})
@@ -57,7 +57,7 @@ const Feedback = () => {
       </div>
       {/* Card */}
       <div className="mt-5 p-4 relative z-10 bg-white border rounded-xl sm:mt-10 md:p-10 dark:bg-gray-800 dark:border-gray-700">
-        <form>
+        <form onSubmit={feedbackForm.handleSubmit}>
           <div className="mb-4 sm:mb-8">
             <label
               htmlFor="hs-feedback-post-comment-name-1"
@@ -83,7 +83,9 @@ const Feedback = () => {
             </label>
             <input
               type="email"
-              id="hs-feedback-post-comment-email-1"
+              id="email"
+              value={feedbackForm.values.email}
+              onChange={feedbackForm.handleChange}
               className="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
               placeholder="Email address"
             />
@@ -97,8 +99,10 @@ const Feedback = () => {
             </label>
             <div className="mt-1">
               <textarea
-                id="hs-feedback-post-comment-textarea-1"
-                name="hs-feedback-post-comment-textarea-1"
+                id="comment"
+                name="comment"
+                value={feedbackForm.values.comment}
+                onChange={feedbackForm.handleChange}
                 rows={3}
                 className="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
                 placeholder="Leave your comment here..."

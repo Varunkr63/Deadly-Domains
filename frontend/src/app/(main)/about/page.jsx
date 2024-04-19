@@ -28,19 +28,18 @@ const About = () => {
         />
         <div className="mt-8 lg:px-10 lg:mt-0">
           <h1 className="text-2xl font-semibold text-gray-800 dark:text-white lg:w-72">
-            Help us improve our productivity
+          We Make Launching Your Dream Website a Breeze
           </h1>
           <p className="max-w-lg mt-6 text-gray-500 dark:text-gray-400">
-            “ Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempore
-            quibusdam ducimus libero ad tempora doloribus expedita laborum saepe
-            voluptas perferendis delectus assumenda rerum, culpa aperiam
-            dolorum, obcaecati corrupti aspernatur a. ”
+            “We understand the excitement and challenges that come with building your online presence. 
+             At Deadly Domain, we're passionate about empowering businesses of all sizes to establish themselves online with confidence. ”
+             Our innovative platform helps you find the perfect domain name that's catchy, memorable, and reflects your brand.
           </p>
           <h3 className="mt-6 text-lg font-medium text-blue-500">
-            Ronik Ederson
+            
           </h3>
           <p className="text-gray-600 dark:text-gray-300">
-            Marketing Manager at Stech
+            
           </p>
           <div className='mt-5'>
           <Link href={"/feedback"} type="button" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Feedback</Link>

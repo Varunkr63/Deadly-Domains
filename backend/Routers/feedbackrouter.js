@@ -3,8 +3,7 @@ const router = express.Router();
 const Model = require('../Models/feedbackModels');
 
 router.post('/add', (req, res) => {
-    console.log(req.body);
-
+    console.log(req.body); 
     // to save data in mongodb
     new Model(req.body).save()
     .then((result) => {
@@ -13,7 +12,6 @@ router.post('/add', (req, res) => {
         console.log(err);
         res.status(500).json(err);
     });
-
 });
 
 router.get('/getall', (req, res) => {

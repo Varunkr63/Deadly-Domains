@@ -1,5 +1,6 @@
 'use client';
 import { useFormik } from 'formik';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { enqueueSnackbar } from 'notistack';
 import React from 'react';
@@ -56,12 +57,12 @@ const Login = () => {
         </h1>
         <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
           Don't have an account yet?
-          <a
+          <Link
             className="text-blue-600 decoration-2 hover:underline font-medium dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
-            href="../examples/html/signup.html"
+            href="/signup"
           >
             Sign up here
-          </a>
+          </Link>
         </p>
       </div>
       <div className="mt-5">
