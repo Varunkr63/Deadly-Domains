@@ -115,8 +115,8 @@ const Contact = () => {
                 </label>
                 <input
                   type="number"
-                  name="hs-phone-number-1"
-                  id="hs-phone-number-1"
+                  name="number"
+                  id="number"
                   className="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
                   placeholder="Phone Number"
                 />
@@ -176,7 +176,7 @@ const Contact = () => {
                 Knowledgebase
               </h3>
               <p className="mt-1 text-sm text-gray-500">
-                We're here to help with any questions or code.
+                We're here to help with any questions.
               </p>
               <a
                 className="mt-2 inline-flex items-center gap-x-2 text-sm font-medium text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"

@@ -1,6 +1,7 @@
 'use client';
 import { useFormik } from 'formik';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { enqueueSnackbar } from 'notistack';
 import React from 'react'
 import * as Yup from 'yup'
@@ -73,12 +74,12 @@ const Signup = () => {
         </h1>
         <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
           Already have an account?
-          <a
+          <Link
             className="text-blue-600 decoration-2 hover:underline font-medium dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
-            href="../examples/html/signin.html"
+            href="/login"
           >
             Sign in here
-          </a>
+          </Link>
         </p>
       </div>
       <div className="mt-5">

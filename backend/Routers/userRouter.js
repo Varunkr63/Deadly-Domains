@@ -61,4 +61,14 @@ router.post("/authenticate", (req,res) => {
         console.log(err);
     })
 })
+
+router.get("/getbymail/:mail", (req,res) => {
+    Model.findOne({mail: req.params.mail})
+    .then((result) => {
+        res.status(200).json(result);
+    }).catch((err) => {
+        res.status(500).json(err)
+    });
+});
+
 module.exports = router;
