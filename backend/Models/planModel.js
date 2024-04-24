@@ -5,7 +5,7 @@ const mySchema = new Schema({
     pricing: String,
     provider: String,
      
-    backup: {type:Storage},
+    backup: String,
     cloudhosting: String,
     managedhosting: String,
     customersupport: String,

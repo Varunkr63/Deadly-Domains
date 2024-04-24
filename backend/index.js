@@ -5,7 +5,7 @@ const cors = require("cors")
 const port = 5000;
 const UserRouter = require("./Routers/userRouter")
 const ContactRouter = require("./Routers/contactRouter")
-const aboutRouter = require("./Routers/aboutRouter")
+const PlanRouter =require ("./Routers/planRouter")
 const feedbackRouter = require("./Routers/feedbackrouter")
 
 app.use(express.json());
@@ -15,7 +15,7 @@ app.use(cors({
 
 app.use("/user", UserRouter);
 app.use("/contact", ContactRouter);
-app.use("/about",aboutRouter);
+app.use("/plan",PlanRouter)
 app.use("/feedback",feedbackRouter);
 
 app.listen(port,() => {
