@@ -1,6 +1,51 @@
+'use client';
 import React from 'react'
+import { Formik } from 'formik';
+
 
 const UserProfile = () => {
+
+  const profileForm = useFormik({
+    initialValues: {
+        
+        email: '',
+        password: '',
+        fullname: '',
+        phone: '',
+
+       
+       
+    },
+    onSubmit: (values) => {
+        console.log(values);
+
+
+        //sending request to backend
+         fetch('http://localhost:5000/user/authenticate',{
+            method: 'POST',
+            body: JSON.stringify(values),//convert js to json
+            headers:{
+                'content-type': 'application/json'
+            }
+         })
+         .then((response) => {
+            console.log(response.status);
+            if (response.status === 200){
+              enqueueSnackbar("User login Successfully", {variant:"success"})
+              router.push("/")
+            }else{
+              enqueueSnackbar("Something went worng", {variant:"warning"})
+            }
+         }).catch((err) => {
+            console.log(err);
+            enqueueSnackbar("Something went worng", {variant:"warning"})
+         })
+        
+         
+        },
+       
+})
+
   return (
     <div>
       <>
