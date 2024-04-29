@@ -4,7 +4,6 @@ const mySchema = new Schema({
     title: String,
     pricing: String,
     provider: String,
-     
     backup: String,
     cloudhosting: String,
     managedhosting: String,
@@ -15,10 +14,7 @@ const mySchema = new Schema({
     freeCDN: String,
     unlimitedfreeSSL: String,
     GITaccess: String,
-    
     uptimegurantee: String
-
-
 });
 
 
