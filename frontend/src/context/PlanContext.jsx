@@ -102,7 +102,8 @@ export const PlanProvider = ({ children }) => {
             setCurrentUser,
             loggedIn,
             setLoggedIn,
-            logout
+            logout,
+            HOSTING_VENDORS
         }}>
             {children}
         </PlanContext.Provider>

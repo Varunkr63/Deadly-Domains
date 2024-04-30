@@ -14,11 +14,13 @@ const mySchema = new Schema({
     freeCDN: String,
     unlimitedfreeSSL: String,
     GITaccess: String,
-    uptimegurantee: String
+    uptimegurantee: String,
+    description: String,
+    image: String,
+    createdAt: {
+        type: Date,
+        default: Date.now
+    }
 });
-
-
-
-
 
 module.exports = model('plan', mySchema);

@@ -3,8 +3,7 @@ import Link from "next/link"
 
 const Navbar = () => {
   return (
-    <div>
-      <nav className="bg-white dark:bg-gray-900 fixed w-full z-20 top-0 start-0 border-b border-gray-200 dark:border-gray-600">
+      <nav className="z-20 bg-white dark:bg-gray-900 w-full border-b border-gray-200 dark:border-gray-600">
         <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
           <Link
             href="/"
@@ -15,7 +14,7 @@ const Navbar = () => {
               className="h-8"
               alt="Flowbite Logo"
             />
-            
+
             <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
               Deadly Domain
             </span>
@@ -95,8 +94,6 @@ const Navbar = () => {
           </div>
         </div>
       </nav>
-
-    </div>
   )
 }
 
