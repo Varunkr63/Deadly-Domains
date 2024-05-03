@@ -20,6 +20,8 @@ app.use("/plan", PlanRouter)
 app.use("/feedback", feedbackRouter);
 app.use("/review", reviewRouter);
 
+app.use(express.static('./static/uploads'));
+
 app.listen(port, () => {
     console.log("Server Started");
 })

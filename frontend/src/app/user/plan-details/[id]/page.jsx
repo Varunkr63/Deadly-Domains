@@ -1,8 +1,22 @@
 'use client';
 import { useParams } from 'next/navigation'
+import { enqueueSnackbar } from 'notistack';
 import React, { useEffect, useRef, useState } from 'react'
 import StarRatings from 'react-star-ratings';
 import ReactTimeAgo from 'react-time-ago';
+
+const PLAN_FEATURES = [
+  'freeCDN',
+  'backup',
+  'cloudhosting',
+  'managedhosting',
+  'customersupport',
+  'ddosProtection',
+  'malwareScanner',
+  'unlimitedfreeSSL',
+  'GITaccess',
+  'uptimegurantee'
+];
 
 const PlanDetails = () => {
 
@@ -20,6 +34,7 @@ const PlanDetails = () => {
         return res.json();
       })
       .then(data => {
+        console.log(data);
         setPlanDetails(data);
       })
       .catch(err => {
@@ -51,37 +66,36 @@ const PlanDetails = () => {
 
   const displayReviews = () => {
     return reviewList.map((review) => (
-      <div key={review._id} withBorder p={20} radius="md" mt={20}>
-        <div justify="space-between" align={'start'}>
-
-          <div>
-            <img
-              src={`${process.env.NEXT_PUBLIC_API_URL}/${review.user.avatar}`}
-              alt={review.user.name}
-              radius="xl"
-            />
-            <div>
-              <p fz="sm">{review.user.name}</p>
-              <p fz="xs" c="dimmed">
-                <ReactTimeAgo date={new Date()} locale="en-US" />
-              </p>
+      <div className="h-auto mb-10">
+        <div className="flex flex-col bg-white rounded-xl dark:bg-neutral-900">
+          <div className="flex-auto p-4 md:p-6">
+            <StarRatings starDimension="20px"
+              starSpacing="3px" rating={review.rating}
+              starRatedColor="#ffc300" numberOfStars={5} />
+            <p className="mt-3 text-base italic md:text-lg text-gray-800 dark:text-neutral-200">
+              "{review.review}"
+            </p>
+          </div>
+          <div className="p-4 bg-gray-100 rounded-b-xl md:px-7 dark:bg-neutral-800">
+            <div className="flex items-center">
+              <div className="flex-shrink-0">
+                <img
+                  className="size-8 sm:h-[2.875rem] sm:w-[2.875rem] rounded-full"
+                  src={`${process.env.NEXT_PUBLIC_API_URL}/${review.user.avatar}`}
+                  alt={review.user.name}
+                />
+              </div>
+              <div className="grow ms-3">
+                <p className="text-sm sm:text-base font-semibold text-gray-800 dark:text-neutral-200">
+                  <p fz="sm">{review.user.name}</p>
+                </p>
+                <p className="text-xs text-gray-500 dark:text-neutral-400">
+                  <ReactTimeAgo date={new Date()} locale="en-US" />
+                </p>
+              </div>
             </div>
           </div>
-          <div direction="horizontal" justify='flex-end'>
-            <StarRatings rating={rating}
-              starRatedColor="blue" numberOfStars={5} />
-            {/* {
-              currentUser && currentUser._id === review.user._id && (
-                <ActionIcon color="red" title={'delete'} size={'sm'} variant="filled" onClick={
-                  () => deleteReview(review._id)
-                }>
-                  <IconTrashFilled size={'xs'} />
-                </ActionIcon>
-              )
-            } */}
-          </div>
         </div>
-        <p mt={10}>{review.review}</p>
       </div>
     ))
   }
@@ -99,7 +113,8 @@ const PlanDetails = () => {
         'x-auth-token': currentUser.token
       },
       body: JSON.stringify({
-        product: id,
+        user: currentUser._id,
+        plan: id,
         review,
         rating
       })
@@ -113,23 +128,27 @@ const PlanDetails = () => {
   const ratingForm = () => {
     if (currentUser) {
       return (
-        <div withBorder radius="md" p={20}>
+        <div className='mt-20'>
 
-          <StarRatings rating={rating}
-            starRatedColor="blue"
+          <StarRatings
+            starDimension="40px"
+            starSpacing="10px"
+            rating={rating}
+            starRatedColor="#ffc300"
             changeRating={setRating}
+            starHoverColor="#ffc300"
             numberOfStars={5} />
+          <div className="max-w-xl space-y-3">
+            <textarea
+              className="mt-5 py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
+              rows={3}
+              ref={reviewRef}
+              placeholder="Leave your review here..."
+            />
+          </div>
 
-          <textarea
-            ref={reviewRef}
-            mt={10}
-            placeholder="Write your review here"
-            radius="md"
-            w={'100%'}
-            className={classes.textarea}
-          />
-          <button variant="outline" color="blue" radius="md" mt={20} onClick={submitReview}>
-            Submit
+          <button onClick={submitReview} type="button" className="mt-3 py-2 px-3 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
+            Submit Review
           </button>
         </div>
       )
@@ -143,109 +162,66 @@ const PlanDetails = () => {
       return <div>Loading...</div>
     }
     return (
-      <div className="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
-        {/* Grid */}
-        <div className="md:grid md:grid-cols-2 md:items-center md:gap-12 xl:gap-32">
-          <div>
-            <img
-              className="rounded-xl"
-              src="https://images.unsplash.com/photo-1648737963503-1a26da876aca?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=900&h=900&q=80"
-              alt="Image Description"
-            />
-          </div>
-          {/* End Col */}
-          <div className="mt-5 sm:mt-10 lg:mt-0">
-            <div className="space-y-6 sm:space-y-8">
-              {/* Title */}
-              <div className="space-y-2 md:space-y-4">
-                <h2 className="font-bold text-3xl lg:text-4xl text-gray-800 dark:text-neutral-200">
-                  We tackle the challenges start-ups face
-                </h2>
-                <p className="text-gray-500 dark:text-neutral-500">
-                  Besides working with start-up enterprises as a partner for
-                  digitalization, we have built enterprise products for common pain
-                  points that we have encountered in various products and projects.
-                </p>
-              </div>
-              {/* End Title */}
-              {/* List */}
-              <ul className="space-y-2 sm:space-y-4">
-                <li className="flex space-x-3">
-                  <span className="mt-0.5 size-5 flex justify-center items-center rounded-full bg-blue-50 text-blue-600 dark:bg-blue-800/30 dark:text-blue-500">
-                    <svg
-                      className="flex-shrink-0 size-3.5"
-                      xmlns="http://www.w3.org/2000/svg"
-                      width={24}
-                      height={24}
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth={2}
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <polyline points="20 6 9 17 4 12" />
-                    </svg>
-                  </span>
-                  <span className="text-sm sm:text-base text-gray-500 dark:text-neutral-500">
-                    <span className="font-bold">Easy &amp; fast</span> designing
-                  </span>
-                </li>
-                <li className="flex space-x-3">
-                  <span className="mt-0.5 size-5 flex justify-center items-center rounded-full bg-blue-50 text-blue-600 dark:bg-blue-800/30 dark:text-blue-500">
-                    <svg
-                      className="flex-shrink-0 size-3.5"
-                      xmlns="http://www.w3.org/2000/svg"
-                      width={24}
-                      height={24}
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth={2}
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <polyline points="20 6 9 17 4 12" />
-                    </svg>
-                  </span>
-                  <span className="text-sm sm:text-base text-gray-500 dark:text-neutral-500">
-                    Powerful <span className="font-bold">features</span>
-                  </span>
-                </li>
-                <li className="flex space-x-3">
-                  <span className="mt-0.5 size-5 flex justify-center items-center rounded-full bg-blue-50 text-blue-600 dark:bg-blue-800/30 dark:text-blue-500">
-                    <svg
-                      className="flex-shrink-0 size-3.5"
-                      xmlns="http://www.w3.org/2000/svg"
-                      width={24}
-                      height={24}
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth={2}
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <polyline points="20 6 9 17 4 12" />
-                    </svg>
-                  </span>
-                  <span className="text-sm sm:text-base text-gray-500 dark:text-neutral-500">
-                    User Experience Design
-                  </span>
-                </li>
-              </ul>
-              {/* End List */}
-            </div>
-          </div>
-          {/* End Col */}
+
+      <div className="mb-20 md:grid md:grid-cols-2 md:items-center md:gap-12 xl:gap-32">
+        <div>
+          <img
+            className="rounded-xl"
+            src="https://images.unsplash.com/photo-1648737963503-1a26da876aca?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=900&h=900&q=80"
+            alt="Image Description"
+          />
         </div>
-        {/* End Grid */}
+        {/* End Col */}
+        <div className="mt-5 sm:mt-10 lg:mt-0">
+          <div className="space-y-6 sm:space-y-8">
+            {/* Title */}
+            <div className="space-y-2 md:space-y-4">
+              <h2 className="font-bold text-3xl lg:text-4xl text-gray-800 dark:text-neutral-200">
+                {planDetails.title}
+              </h2>
+              <p className="text-gray-500 dark:text-neutral-500">
+                {planDetails.description}
+              </p>
+            </div>
+            {/* End Title */}
+            {/* List */}
+            <ul className="space-y-2 sm:space-y-4">
+              {
+                PLAN_FEATURES.map((feature) => (
+                  <li className="flex space-x-3">
+                    <span className="mt-0.5 size-5 flex justify-center items-center rounded-full bg-blue-50 text-blue-600 dark:bg-blue-800/30 dark:text-blue-500">
+                      <svg
+                        className="flex-shrink-0 size-3.5"
+                        xmlns="http://www.w3.org/2000/svg"
+                        width={24}
+                        height={24}
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth={2}
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <polyline points="20 6 9 17 4 12" />
+                      </svg>
+                    </span>
+                    <span className="text-sm sm:text-base text-gray-500 dark:text-neutral-500">
+                      <span className="font-bold">{feature}</span> {planDetails[feature]}
+                    </span>
+                  </li>
+                ))
+              }
+            </ul>
+            {/* End List */}
+          </div>
+        </div>
+        {/* End Col */}
       </div>
     )
   }
 
   return (
-    <div>
+    <div className="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
       {showPlanDetails()}
       {displayReviews()}
       {ratingForm()}
