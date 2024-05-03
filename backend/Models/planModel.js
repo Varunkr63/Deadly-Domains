@@ -3,6 +3,11 @@ const { model, Schema } = require('../connection');
 const mySchema = new Schema({
     title: String,
     pricing: String,
+    numberOfWebsites: Number,
+    storage: Number,
+    storageType: String,
+    wordpressAvailable: Boolean,
+    firewall: String,
     provider: String,
     backup: String,
     cloudhosting: String,
