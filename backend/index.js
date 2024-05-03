@@ -8,6 +8,7 @@ const ContactRouter = require("./Routers/contactRouter")
 const PlanRouter = require("./Routers/planRouter")
 const feedbackRouter = require("./Routers/feedbackrouter")
 const reviewRouter = require("./Routers/reviewRouter")
+const utilRouter = require("./Routers/utilRouter")
 
 app.use(express.json());
 app.use(cors({
@@ -19,6 +20,7 @@ app.use("/contact", ContactRouter);
 app.use("/plan", PlanRouter)
 app.use("/feedback", feedbackRouter);
 app.use("/review", reviewRouter);
+app.use("/util", utilRouter);
 
 app.use(express.static('./static/uploads'));
 
