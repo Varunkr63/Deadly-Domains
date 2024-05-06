@@ -1,10 +1,15 @@
 'use client';
+import { Dialog } from '@headlessui/react';
 import { IconPlus } from '@tabler/icons-react';
 import React, { useEffect, useState } from 'react'
+
 
 const ComparePlans = () => {
 
   const [selPlans, setSelPlans] = useState([]);
+  const [isOpen, setIsOpen] = useState(false)
+  const [planResult, setPlanResult] = useState([]);
+  const [allPlans, setAllPlans] = useState([]);
 
   const fetchPlanDetails = (id) => {
     fetch(`${process.env.NEXT_PUBLIC_API_URL}/plan/getbyid/${id}`)
@@ -19,16 +24,170 @@ const ComparePlans = () => {
       })
   }
 
+  const fetchAllPlans = () => {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/plan/getall`)
+      .then(res => {
+        return res.json();
+      })
+      .then(data => {
+        console.log(data);
+        setAllPlans(data);
+      })
+      .catch(err => {
+        console.log(err);
+      })
+  }
+
+  const addPlanToComparison = (plan) => {
+    setAllPlans([...selPlans, plan]);
+    console.log(selPlans);
+  }
+
+  const filterPlans = (e) => {
+    const search = e.target.value;
+    if (search === '') setPlanResult([]);
+    const filteredPlans = allPlans.filter(plan => plan.title.toLowerCase().includes(search.toLowerCase()));
+    setPlanResult(filteredPlans);
+  }
+
   useEffect(() => {
-    fetchPlanDetails();
+    fetchAllPlans();
   }, [])
 
   const showComparison = () => {
 
   }
 
+  const displayPlansComparision = () => {
+    return selPlans.map(plan => (
+      <div className="col-span-1">
+        {/* Header */}
+        <div className="h-full p-4 flex flex-col justify-between bg-white border border-gray-200 rounded-xl dark:bg-neutral-900 dark:border-neutral-800">
+          <div>
+            <span className="font-semibold text-lg text-gray-800 dark:text-neutral-200">
+              Free
+            </span>
+            <p className="text-xs text-gray-500 dark:text-neutral-500">
+              Free forever
+            </p>
+          </div>
+          <div className="mt-2">
+            <a
+              className="w-full py-2 px-3 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-800 dark:text-white dark:hover:bg-neutral-800"
+              href="#"
+            >
+              Get started
+            </a>
+          </div>
+        </div>
+        {/* End Header */}
+      </div>
+    ))
+  }
+
+  const planSearchResult = () => {
+    return <div className='h-96 overflow-auto py-10'>
+      {
+        planResult.map(plan => (
+          <div className="flex items-end content-between bg-white border shadow-sm rounded-xl dark:bg-neutral-900 dark:border-neutral-700 dark:shadow-neutral-700/70">
+            <div className="p-4 md:p-5">
+              <div>
+
+                <h3 className="text-lg font-bold text-gray-800 dark:text-white">
+                  {plan.title}
+                </h3>
+                <p className="mt-2 text-gray-500 dark:text-neutral-400">
+                  ₹{plan.pricing}
+                </p>
+              </div>
+              <button onClick={() => addPlanToComparison(plan)} type="button" className="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
+                Add Plan
+              </button>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  }
+
+  const addPlanModal = () => {
+    return <div className="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-neutral-900 dark:border-neutral-700 dark:shadow-neutral-700/70">
+      <div className="p-4 md:p-5">
+        <h3 className="text-lg font-bold text-gray-800 dark:text-white">
+          Find Plans for Comparison
+        </h3>
+        <p className="mt-2 text-gray-500 dark:text-neutral-400">
+          Select the plans you want to compare
+        </p>
+        <div className='my-10'>
+          <label
+            htmlFor="hs-trailing-button-add-on-with-icon-and-button"
+            className="sr-only"
+          >
+            Label
+          </label>
+          <div className="relative flex rounded-lg shadow-sm">
+            <input
+              onChange={filterPlans}
+              type="text"
+              id="hs-trailing-button-add-on-with-icon-and-button"
+              name="hs-trailing-button-add-on-with-icon-and-button"
+              className="border-2 py-3 px-4 ps-11 block w-full border-gray-200 shadow-sm rounded-s-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
+            />
+            <div className="absolute inset-y-0 start-0 flex items-center pointer-events-none z-20 ps-4">
+              <svg
+                className="flex-shrink-0 size-4 text-gray-400 dark:text-neutral-500"
+                xmlns="http://www.w3.org/2000/svg"
+                width={24}
+                height={24}
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth={2}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <circle cx={11} cy={11} r={8} />
+                <path d="m21 21-4.3-4.3" />
+              </svg>
+            </div>
+          </div>
+
+          {
+            planSearchResult()
+          }
+        </div>
+      </div>
+      <div className="bg-gray-100 border-t rounded-b-xl py-3 px-4 md:py-4 md:px-5 dark:bg-neutral-900 dark:border-neutral-700">
+        <p className="mt-1 text-sm text-gray-500 dark:text-neutral-500">
+          Last updated 5 mins ago
+        </p>
+      </div>
+    </div>
+
+  }
+
   return (
     <div>
+
+      <Dialog
+        open={isOpen}
+        onClose={() => setIsOpen(false)}
+        className="relative z-50"
+      >
+        {/* The backdrop, rendered as a fixed sibling to the panel container */}
+        <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
+
+        {/* Full-screen container to center the panel */}
+        <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
+          {/* The actual dialog panel  */}
+          <Dialog.Panel className="mx-auto max-w-lg rounded bg-transparent">
+            {addPlanModal()}
+
+
+          </Dialog.Panel>
+        </div>
+      </Dialog>
       <>
         {/* Comparison Table */}
         <div className="relative dark:bg-slate-800">
@@ -41,7 +200,7 @@ const ComparePlans = () => {
                 Choose the best plan for your business
               </p>
             </div>
-            <button className='mb-5 py-2 px-3 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-blue-700 dark:bg-blue-900 dark:text-white dark:hover:bg-blue-800'>
+            <button onClick={e => setIsOpen(true)} className='mb-5 py-2 px-3 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-blue-700 dark:bg-blue-900 dark:text-white dark:hover:bg-blue-800'>
               <IconPlus size={20} />
               Add Plan to Comparison
             </button>
@@ -56,98 +215,10 @@ const ComparePlans = () => {
                     {/* End Header */}
                   </div>
                   {/* End Col */}
-                  <div className="col-span-1">
-                    {/* Header */}
-                    <div className="h-full p-4 flex flex-col justify-between bg-white border border-gray-200 rounded-xl dark:bg-neutral-900 dark:border-neutral-800">
-                      <div>
-                        <span className="font-semibold text-lg text-gray-800 dark:text-neutral-200">
-                          Free
-                        </span>
-                        <p className="text-xs text-gray-500 dark:text-neutral-500">
-                          Free forever
-                        </p>
-                      </div>
-                      <div className="mt-2">
-                        <a
-                          className="w-full py-2 px-3 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-800 dark:text-white dark:hover:bg-neutral-800"
-                          href="#"
-                        >
-                          Get started
-                        </a>
-                      </div>
-                    </div>
-                    {/* End Header */}
-                  </div>
-                  {/* End Col */}
-                  <div className="col-span-1">
-                    {/* Header */}
-                    <div className="h-full p-4 flex flex-col justify-between bg-white border border-gray-200 rounded-xl dark:bg-neutral-900 dark:border-neutral-800">
-                      <div>
-                        <span className="font-semibold text-lg text-gray-800 dark:text-neutral-200">
-                          Startup
-                        </span>
-                        <p className="text-xs text-gray-500 dark:text-neutral-500">
-                          $39 per month billed annually
-                        </p>
-                      </div>
-                      <div className="mt-2">
-                        <a
-                          className="w-full py-2 px-3 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none"
-                          href="#"
-                        >
-                          Get started
-                        </a>
-                      </div>
-                    </div>
-                    {/* End Header */}
-                  </div>
-                  {/* End Col */}
-                  <div className="col-span-1">
-                    {/* Header */}
-                    <div className="h-full p-4 flex flex-col justify-between bg-white border border-gray-200 rounded-xl dark:bg-neutral-900 dark:border-neutral-800">
-                      <div>
-                        <span className="font-semibold text-lg text-gray-800 dark:text-neutral-200">
-                          Team
-                        </span>
-                        <p className="text-xs text-gray-500 dark:text-neutral-500">
-                          $89 per month billed annually
-                        </p>
-                      </div>
-                      <div className="mt-2">
-                        <a
-                          className="w-full py-2 px-3 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-800 dark:text-white dark:hover:bg-neutral-800"
-                          href="#"
-                        >
-                          Get started
-                        </a>
-                      </div>
-                    </div>
-                    {/* End Header */}
-                  </div>
-                  {/* End Col */}
-                  <div className="col-span-1">
-                    {/* Header */}
-                    <div className="h-full p-4 flex flex-col justify-between bg-white border border-gray-200 rounded-xl dark:bg-neutral-900 dark:border-neutral-800">
-                      <div>
-                        <span className="font-semibold text-lg text-gray-800 dark:text-neutral-200">
-                          Enterprise
-                        </span>
-                        <p className="text-xs text-gray-500 dark:text-neutral-500">
-                          $149 per month billed annually
-                        </p>
-                      </div>
-                      <div className="mt-2">
-                        <a
-                          className="w-full py-2 px-3 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-800 dark:text-white dark:hover:bg-neutral-800"
-                          href="#"
-                        >
-                          Get started
-                        </a>
-                      </div>
-                    </div>
-                    {/* End Header */}
-                  </div>
-                  {/* End Col */}
+
+                  {
+                    displayPlansComparision()
+                  }
                 </div>
                 {/* End Grid */}
               </div>
