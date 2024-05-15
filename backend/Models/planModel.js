@@ -3,26 +3,31 @@ const { model, Schema } = require('../connection');
 const mySchema = new Schema({
     title: String,
     pricing: String,
+    numberOfWebsites: Number,
+    storage: Number,
+    resources: String,
+    domain: String,
+    email: String,
+    storageType: String,
+    hostingType: String,
+    firewall: String,
+    offer: String,
     provider: String,
-     
     backup: String,
-    cloudhosting: String,
-    managedhosting: String,
     customersupport: String,
     features: Array,
     ddosProtection: String,
     malwareScanner: String,
-    freeCDN: String,
-    unlimitedfreeSSL: String,
+    cdn: String,
+    sslCertificate: String,
     GITaccess: String,
-    
-    uptimegurantee: String
-
-
+    uptimegurantee: String,
+    description: String,
+    image: String,
+    createdAt: {
+        type: Date,
+        default: Date.now
+    }
 });
-
-
-
-
 
 module.exports = model('plan', mySchema);

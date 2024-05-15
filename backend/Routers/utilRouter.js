@@ -47,7 +47,7 @@ router.post('/sendotp', (req, res) => {
         from : process.env.EMAIL_ID,
         to : req.body.email,
         subject : 'OTP for Password Reset',
-        html: <p> OTP for password reset is <b>${otp}</b> </p>
+        html: `<p> OTP for password reset is <b>${otp}</b> </p>`
     })
     .then((info) => {
         return res.status(201).json(
