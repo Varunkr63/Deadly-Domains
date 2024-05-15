@@ -13,7 +13,7 @@ const BrowseSidebar = ({ children }) => {
                         href="#"
                         aria-label="Brand"
                     >
-                        Brand
+                        Deadly Domains
                     </a>
                 </div>
                 <nav
