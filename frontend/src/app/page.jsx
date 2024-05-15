@@ -3877,7 +3877,7 @@ const Home = () => {
           {/* Item 1 */}
           <div className="hidden duration-700 ease-in-out" data-carousel-item="">
             <img
-              src="/docs/images/carousel/carousel-1.svg"
+              src=""
               className="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
               alt="..."
             />
@@ -4015,7 +4015,7 @@ const Home = () => {
                 href="#"
                 aria-label="Brand"
               >
-                Brand
+                Deadly Domains
               </a>
             </div>
             {/* End Col */}
@@ -4030,14 +4030,7 @@ const Home = () => {
                     Pricing
                   </a>
                 </p>
-                <p>
-                  <a
-                    className="inline-flex gap-x-2 text-gray-400 hover:text-gray-200 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
-                    href="#"
-                  >
-                    Changelog
-                  </a>
-                </p>
+                
                 <p>
                   <a
                     className="inline-flex gap-x-2 text-gray-400 hover:text-gray-200 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
@@ -4068,17 +4061,7 @@ const Home = () => {
                     Blog
                   </a>
                 </p>
-                <p>
-                  <a
-                    className="inline-flex gap-x-2 text-gray-400 hover:text-gray-200 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
-                    href="#"
-                  >
-                    Careers
-                  </a>{" "}
-                  <span className="inline ms-1 text-xs bg-blue-700 text-white py-1 px-2 rounded-lg">
-                    We're hiring
-                  </span>
-                </p>
+                
                 <p>
                   <a
                     className="inline-flex gap-x-2 text-gray-400 hover:text-gray-200 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
@@ -4124,7 +4107,7 @@ const Home = () => {
           <div className="mt-5 sm:mt-12 grid gap-y-2 sm:gap-y-0 sm:flex sm:justify-between sm:items-center">
             <div className="flex justify-between items-center">
               <p className="text-sm text-gray-400">
-                © 2022 Preline. All rights reserved.
+                © 2024 Deadly Domains. All rights reserved.
               </p>
             </div>
             {/* End Col */}
