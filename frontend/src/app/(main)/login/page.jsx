@@ -155,12 +155,12 @@ const Login = () => {
                       >
                         Password
                       </label>
-                      <a
+                      <Link
                         className="text-sm text-blue-600 decoration-2 hover:underline font-medium dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
-                        href="../examples/html/recover-account.html"
+                        href="/resetPassword"
                       >
                         Forgot password?
-                      </a>
+                      </Link>
                     </div>
                     <div className="relative">
                       <input
