@@ -167,7 +167,7 @@ const PlanDetails = () => {
         <div>
           <img
             className="rounded-xl"
-            src={`${process.env.NEXT_PUBLIC_API_URL}/${planDetails.image}`}
+            src={`https://www.acewebstudio.com/wp-content/uploads/2019/05/hosting-plan.jpg`}
             alt="Image Description"
           />
         </div>

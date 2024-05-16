@@ -1,29 +1,41 @@
 'use client';
-import { useState } from "react";
+import { IconCheckbox, IconX } from "@tabler/icons-react";
+import { useRef, useState } from "react";
 
 const CheckDomain = () => {
 
     const [availabilityStatus, setAvailabilityStatus] = useState({});
+    const inputRef = useRef(null);
+    const [isAvailable, setIsAvailable] = useState(false);
+    const [submitted, setSubmitted] = useState(false);
 
     const callAPI = (domain) => {
         fetch(`${process.env.NEXT_PUBLIC_DOMAIN_API}&domainName=${domain}&credits=DA`)
-        .then((response) => {
-            console.log(response.status);
-            if(response.status === 200){
-                response.json()
-                .then((data) => {
-                    console.log(data);
-                }).catch((err) => {
-                    console.log(err);
-                });
-            }
-        }).catch((err) => {
-            console.log(err);
-        });
+            .then((response) => {
+                console.log(response.status);
+                if (response.status === 200) {
+                    response.json()
+                        .then((data) => {
+                            console.log(data);
+                            setSubmitted(true);
+                            console.log(data.DomainInfo.domainAvailability);
+                            if (data.DomainInfo.domainAvailability === "AVAILABLE") {
+                                setIsAvailable(true);
+                            }else {
+                                setIsAvailable(false);
+                            }
+                        }).catch((err) => {
+                            console.log(err);
+                        });
+                }
+            }).catch((err) => {
+                console.log(err);
+            });
     }
 
     const handleFormSubmit = (e) => {
         e.preventDefault();
+        setSubmitted(false);
         const form = e.target;
         // console.log(form.elements[0].value);
         callAPI(form.elements[0].value)
@@ -32,7 +44,7 @@ const CheckDomain = () => {
     return (
         <div className="flex flex-col items-center justify-center max-w-2xl px-4 pt-16 mx-auto sm:max-w-2xl md:max-w-4xl lg:pt-32 md:px-8">
             <div className="max-w-xl mb-10 md:mx-auto sm:text-center lg:max-w-2xl md:mb-12">
-               
+
                 <h2 className="max-w-lg mb-6 font-sans text-3xl font-bold leading-none tracking-tight text-gray-900 dark:text-slate-300 sm:text-4xl md:mx-auto">
                     <span className="relative inline-block">
                         <svg
@@ -62,12 +74,13 @@ const CheckDomain = () => {
                     Check Domain Availability
                 </h2>
                 <p className="text-base text-gray-700 md:text-lg">
-                    Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-                    accusantium doloremque rem aperiam, eaque ipsa quae.
+                    Check the availability of your domain name and get the best
+                    domain name for your business.
                 </p>
             </div>
             <form onSubmit={handleFormSubmit} className="flex flex-col items-center w-full mb-4 md:flex-row md:px-16">
                 <input
+                    ref={inputRef}
                     placeholder="Enter Domain Name"
                     required=""
                     name="domain"
@@ -81,15 +94,30 @@ const CheckDomain = () => {
                     Check Availability
                 </button>
             </form>
-            <p className="max-w-md mb-10 text-xs text-gray-600 sm:text-sm md:text-center">
-                Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-                accusantium doloremque laudantium.
-            </p>
-            <img
-                src="/check-domain-hero.png"
-                className="w-full mx-auto md:w-auto md:max-w-xs"
-                alt=""
-            />
+            {
+                !submitted &&
+                <p className="text-center font-bold text-slate-600 mt-32 text-4xl">Enter a Domain to Check its availability</p>
+            }
+            {
+                (isAvailable && submitted) && (
+                    <div className="flex items-center flex-col space-y-8">
+                        <IconCheckbox size={70} color="#22ff46" />
+                        <p className="text-6xl font-bold text-yellow-300">{inputRef.current && inputRef.current.value}</p>
+                        <p className="text-3xl font-bold text-slate-300">Domain is Available</p>
+                    </div>
+                )
+            }
+            {
+                (!isAvailable && submitted) && (
+                    <div className="flex items-center flex-col space-y-8">
+                        <IconX size={70} color="#ff2246" />
+                        <p className="text-6xl font-bold text-yellow-300">{inputRef.current && inputRef.current.value}</p>
+                        <p className="text-3xl font-bold text-slate-300">Domain is Not Available</p>
+                    </div>
+                )
+            }
+
+
         </div>
     );
 };
